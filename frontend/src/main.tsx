@@ -1,21 +1,15 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import {
-  createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import Root from "./routes/root"
+import Routes from "./routes/routes"
 import './index.css'
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Root />
-  },
-]);
+import '@mantine/core/styles.css';
+import { MantineProvider } from '@mantine/core';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <MantineProvider><RouterProvider router={Routes} /></MantineProvider>
   </React.StrictMode>,
 )
