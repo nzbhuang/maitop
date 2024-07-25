@@ -3,16 +3,11 @@ import {
     Burger,
     Group,
     Divider } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
 import { IconSunFilled, IconMoonFilled } from '@tabler/icons-react';
 import { useState } from 'react'
 import classes from './header.module.css'
 
-export default function Header() {
-
-    const [navbarOpen, { toggle: navbarToggle }] =
-        useDisclosure(true);
-
+const Header = ({navbarOpen, navbarToggle}: any) => {
     const [lightMode, toggleTheme] = useState(true);
 
     const toggleThemeIcon = () => {
@@ -22,7 +17,7 @@ export default function Header() {
     return (
         <AppShell.Header className={classes.header}>
             <Group style={{ paddingLeft: "16px" }}>
-                <Burger color="white" size="sm" lineSize={2} opened={!navbarOpen} onClick={navbarToggle} />
+                <Burger color="white" size="sm" lineSize={2} opened={navbarOpen} onClick={navbarToggle} />
                 <h3>maitop</h3>
             </Group>
             <Group style={{ paddingRight: "16px"}}>
@@ -34,3 +29,5 @@ export default function Header() {
         </AppShell.Header>
     )
 }
+
+export default Header;

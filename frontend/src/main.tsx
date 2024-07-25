@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import {
+  BrowserRouter,
   RouterProvider,
 } from "react-router-dom";
 import Routes from "./routes/routes"
@@ -12,8 +13,9 @@ import App from './App'
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <MantineProvider defaultColorScheme='light'>
-      <App />
-      <RouterProvider router={Routes} />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </MantineProvider>
   </React.StrictMode>,
 )
