@@ -1,7 +1,7 @@
 
 const Home = () => {
     return (
-        <p>asdf</p>
+        <p>Home</p>
     )
 }
 
