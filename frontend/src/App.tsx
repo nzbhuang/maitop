@@ -1,20 +1,20 @@
+import React from 'react'
 import { AppShell } from '@mantine/core';
 import Header from './components/header/header'
 import Navbar from './components/navbar/navbar';
-import { useDisclosure } from '@mantine/hooks';
 import './App.css'
 import Router from './routes/routes'
 
-export default function App() {
-    const [navbarOpen, { toggle: navbarToggle }] = useDisclosure(false);
-
+const App: React.FC = () => {
     return (
         <AppShell header={{ height: 60 }}>
-            <Header navbarToggle={navbarToggle} navbarOpen={navbarOpen} />
-            <Navbar navbarToggle={navbarToggle} navbarOpen={navbarOpen}/>
+            <Header />
+            <Navbar />
             <AppShell.Main className="pages">
                 <Router />
             </AppShell.Main>
         </AppShell>
     )
 }
+
+export default App;

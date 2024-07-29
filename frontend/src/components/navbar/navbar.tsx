@@ -12,10 +12,11 @@ import {
     IconListSearch,
     IconBrandGithubFilled,
     IconInfoCircleFilled,
-    IconExternalLink
+    IconExternalLink,
 } from "@tabler/icons-react"
 import { NavLink } from "react-router-dom";
 import classes from "./navbar.module.css"
+import { Settings } from "../../contexts/settingscontext";
 
 const pages = [
     { label: "Home", link: "/", icon: < IconHomeFilled />, external: false },
@@ -25,7 +26,12 @@ const pages = [
     { label: "Info", link: "/info", icon: < IconInfoCircleFilled />, external: false }
 ]
 
-export default function Navbar({ navbarOpen, navbarToggle }: any) {
+const Navbar: React.FC = () => {
+    const {
+        navbarOpen,
+        toggleNavbar,
+    } = Settings();
+
     const pageButtons = pages.map((item) => (
         <UnstyledButton
             component={NavLink}
@@ -57,7 +63,7 @@ export default function Navbar({ navbarOpen, navbarToggle }: any) {
             }}
             size="xs"
             opened={navbarOpen}
-            onClose={navbarToggle}
+            onClose={toggleNavbar}
             padding={0}
             withCloseButton={false}
         >
@@ -67,3 +73,5 @@ export default function Navbar({ navbarOpen, navbarToggle }: any) {
         </Drawer>
     )
 }
+
+export default Navbar;
