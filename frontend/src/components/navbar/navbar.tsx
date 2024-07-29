@@ -42,7 +42,7 @@ const Navbar: React.FC = () => {
             <Group gap={0} justify="space-between">
                 <Group gap={0}>
                 <Box style={{ display: "flex", alignItems: "center" }}>
-                    <ThemeIcon variant="light">
+                    <ThemeIcon variant="light" className={classes.icons}>
                         {item.icon}
                     </ThemeIcon>
                 </Box>
@@ -50,7 +50,7 @@ const Navbar: React.FC = () => {
                     {item.label}
                 </Box>
                 </Group>
-                {item.external && <IconExternalLink className={classes.icons} />}
+                {item.external && <IconExternalLink className={classes.external} />}
             </Group>
         </UnstyledButton>
     ));

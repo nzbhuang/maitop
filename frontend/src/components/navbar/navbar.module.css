@@ -9,10 +9,14 @@
     padding: var(--mantine-spacing-sm);
 
     &:hover {
-        background-color: var(--mantine-color-gray-0);
+        background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-gray-8));
     }
 }
 
 .icons {
-    color: var(--mantine-color-gray-7);
+    color: light-dark(var(--mantine-color-primary-4), var(--mantine-color-primary-3));
+}
+
+.external {
+    color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-gray-3));
 }

@@ -16,7 +16,7 @@ export const SettingsProvider: React.FC<{ children: ReactNode }> = ({ children }
     const [navbarOpen, setNavbar] = useState(false);
 
     const toggleTheme = () => {
-        setTheme(!lightTheme);
+        setTheme(lightTheme ? false : true);
     };
 
     const toggleNavbar = () => {

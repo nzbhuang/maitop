@@ -1,13 +1,14 @@
 .header {
-    background-color: var(--mantine-color-blue-5);
     color: white;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-left: rem(100px);
 }
 
 .title {
     font-size: var(--mantine-font-size-xl);
-    color: var(--mantine-color-white)
+}
+
+.divider {
+    border-color: var(--mantine-color-primary-3)
 }
