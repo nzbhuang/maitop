@@ -39,7 +39,7 @@ export const SettingsProvider: React.FC<{ children: ReactNode }> = ({ children }
 export const Settings = () => {{
     const context = useContext(SettingsContext)
     if (context === undefined) {
-        throw new Error('Settings must be used within a ThemeProvider');
+        throw new Error('Settings must be used within a SettingsProvider');
       }
     return context;
 }};
