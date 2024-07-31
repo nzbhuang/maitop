@@ -1,15 +1,25 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace Models 
+namespace Models
 {
-    public class Chart 
+    public class Chart
     {
-        public int Id { get; set; }
-        public required string Song { get; set; }
-        public required string Type { get; set; }
-        public required string Difficulty { get; set; }
-        public required string InternalLevel { get; set; }
-        public int? New { get; set; }
-         
+        public int Id { get; private set; }
+        public required string Song { get; init; } // init: read only property
+        public required string Type { get; init; }
+        public required string Difficulty { get; init; }
+        public required string InternalLevel { get; init; }
+        public int? New { get; init; }
+
+        // Constructor to set the read only properties
+        public Chart(int id, string song, string type, string difficulty, string internalLevel)
+        {
+            Id = id;
+            Song = song;
+            Type = type;
+            Difficulty = difficulty;
+            InternalLevel = internalLevel;
+        }
+
     }
 }

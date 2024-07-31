@@ -5,7 +5,8 @@ namespace Contexts
 {
     public class ChartsDbContext : DbContext
     {
-        public ChartsDbContext(DbContextOptions<ChartsDbContext> options) : base(options)
+        public ChartsDbContext(DbContextOptions<ChartsDbContext> options)
+            : base(options)
         {
         }
 
