@@ -8,15 +8,21 @@
     display: block;
     padding: var(--mantine-spacing-sm);
 
-    &:hover {
+    @mixin hover {
         background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-gray-8));
     }
 }
 
 .icons {
-    color: light-dark(var(--mantine-color-primary-4), var(--mantine-color-primary-3));
+    color: var(--mantine-color-primary-4);
+    @mixin dark {
+        color: var(--mantine-color-primary-3)
+    }
 }
 
 .external {
-    color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-gray-3));
+    color: var(--mantine-color-gray-7);
+    @mixin dark {
+        color: var(--mantine-color-gray-3)
+    }
 }
