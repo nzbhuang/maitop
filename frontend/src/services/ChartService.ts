@@ -5,9 +5,10 @@ const { apiBase } = config; // ends in '/api/'
 
 export async function getAllCharts() {
     try {
-        const response = await axios.get(`${apiBase}Charts`);
-        console.log(response);
+        const res = await axios.get(`${apiBase}Charts`);
+        console.log(res);
+        return res;
     } catch (err) {
-        console.error(err);
+        throw err;
     }
 }
