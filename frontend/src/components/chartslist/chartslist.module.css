@@ -1,0 +1,35 @@
+.page {
+    display: flex;
+    justify-content: center;
+    max-height: 90%;
+}
+
+.stack {
+    max-width: 90%;
+    align-items: center;
+}
+
+.remaster {
+    font-weight: bold;
+    color: #d772ff;
+}
+
+.master {
+    font-weight: bold;
+    color: #9022ff;
+}
+
+.expert {
+    font-weight: bold;
+    color: #ff333a;
+}
+
+.sortIcon {
+    width: rem(16);
+    height: rem(16);
+    stroke: 1.5;
+}
+
+.header {
+    font-weight: normal;
+}
