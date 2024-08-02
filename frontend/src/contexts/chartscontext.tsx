@@ -29,6 +29,7 @@ export const ChartsProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 
     const fetchCharts = async () => {
         try {
+            setLoading(true);
             const res = await getAllCharts();
             setCharts(res.data);
         }
