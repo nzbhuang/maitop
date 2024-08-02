@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
-import { getAllCharts } from '../../services/ChartService'
+import { useState } from 'react';
 import { Chart } from '../../models/Chart';
-import { Box, Group, Stack, Table, Text, UnstyledButton } from '@mantine/core';
+import { Box, Group, LoadingOverlay, Stack, Table, Text, UnstyledButton } from '@mantine/core';
 import classes from './chartslist.module.css'
 import { IconChevronDown, IconChevronUp, IconSelector } from '@tabler/icons-react';
 import React from 'react';
+import { UseCharts } from '../../contexts/chartscontext';
 
 const getDifficultyClass = (chart: Chart) => {
     if (chart.difficulty === "remaster") return classes.remaster;
@@ -74,27 +74,9 @@ function sortCharts(
 
 
 const ChartsList: React.FC = () => {
-    const [charts, setCharts] = useState<Chart[]>([]);
-    const [loading, setLoading] = useState<boolean>(false);
-    const [error, setError] = useState<string | null>(null)
+    const { charts, setCharts, loading, error } = UseCharts();
     const [sortBy, setSortBy] = useState<keyof Chart | null>(null)
     const [reverseSort, setReverseSort] = useState<boolean>(false)
-
-    useEffect(() => {
-        const fetchCharts = async () => {
-            try {
-                const res = await getAllCharts();
-                setCharts(res.data);
-            }
-            catch (err) {
-                setError("Failed to fetch charts");
-            }
-            finally {
-                setLoading(false);
-            }
-        }
-        fetchCharts();
-    }, []);
 
     const rows = charts.map((chart) =>
         <Table.Tr>
@@ -116,8 +98,11 @@ const ChartsList: React.FC = () => {
         setCharts(sortCharts(charts, { sortBy: field, isReverse }))
     }
 
+    if (error) return <Text>Failed loading charts...</Text>
+
     return (
         <Box className={classes.page}>
+            <LoadingOverlay visible={loading} loaderProps={{ children: "Loading charts..."}} />
             <Stack className={classes.stack}>
                 {loading && <p>loading data</p>}
                 {error && <p>{error}</p>}

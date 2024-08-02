@@ -7,6 +7,7 @@ import Router from './routes/routes'
 import { SettingsProvider } from './contexts/settingscontext';
 import { BrowserRouter } from 'react-router-dom';
 import '@mantine/core/styles.css';
+import { ChartsProvider } from './contexts/chartscontext';
 
 const AppShellItems: React.FC = () => {
     return (
@@ -62,11 +63,13 @@ const theme = createTheme({
 const App: React.FC = () => {
     return (
         <SettingsProvider>
-            <MantineProvider theme={theme}>
-                <BrowserRouter>
-                    <AppShellItems />
-                </BrowserRouter>
-            </MantineProvider>
+            <ChartsProvider>
+                <MantineProvider theme={theme}>
+                    <BrowserRouter>
+                        <AppShellItems />
+                    </BrowserRouter>
+                </MantineProvider>
+            </ChartsProvider>
         </SettingsProvider>
     )
 }
