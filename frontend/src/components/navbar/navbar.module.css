@@ -26,3 +26,17 @@
         color: var(--mantine-color-gray-3)
     }
 }
+
+.loginButton {
+    position: fixed;
+    display: block;
+    padding: var(--mantine-spacing-md);
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    background-color: var(--mantine-color-primary-2);
+
+    @mixin dark {
+        background-color: var(--mantine-color-primary-4);
+    }
+}

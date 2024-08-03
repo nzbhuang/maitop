@@ -5,6 +5,11 @@ interface SettingsContextItems {
     toggleTheme: () => void;
     navbarOpen: boolean;
     toggleNavbar: () => void;
+    loginOpen: boolean;
+    toggleLogin: () => void;
+    username: string;
+    setGUsername: (userInput: string) => void;
+    clearGUsername: () => void;
 };
 
 const SettingsContext = createContext<SettingsContextItems | undefined>(
@@ -14,6 +19,8 @@ const SettingsContext = createContext<SettingsContextItems | undefined>(
 export const SettingsProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [lightTheme, setTheme] = useState(true);
     const [navbarOpen, setNavbar] = useState(false);
+    const [loginOpen, setLoginOpen] = useState(false);
+    const [username, setUsername] = useState("");
 
     const toggleTheme = () => {
         setTheme(lightTheme ? false : true);
@@ -23,6 +30,18 @@ export const SettingsProvider: React.FC<{ children: ReactNode }> = ({ children }
         setNavbar(!navbarOpen);
     };
 
+    const toggleLogin = () => {
+        setLoginOpen(!loginOpen);
+    }
+
+    const setGUsername = (userInput: string) => {
+        setUsername(userInput);
+    }
+
+    const clearGUsername = () => {
+        setUsername("");
+    }
+
     return (
         <SettingsContext.Provider
             value={{
@@ -30,17 +49,24 @@ export const SettingsProvider: React.FC<{ children: ReactNode }> = ({ children }
                 toggleTheme,
                 navbarOpen,
                 toggleNavbar,
+                loginOpen,
+                toggleLogin,
+                username,
+                setGUsername,
+                clearGUsername,
             }}>
-                {children}
+            {children}
         </SettingsContext.Provider>
     );
 };
 
-export const Settings = () => {{
-    const context = useContext(SettingsContext)
-    if (context === undefined) {
-        throw new Error('Settings must be used within a SettingsProvider');
-      }
-    return context;
-}};
+export const Settings = () => {
+    {
+        const context = useContext(SettingsContext)
+        if (context === undefined) {
+            throw new Error('Settings must be used within a SettingsProvider');
+        }
+        return context;
+    }
+};
 

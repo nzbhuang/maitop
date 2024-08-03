@@ -5,6 +5,7 @@ import {
     Group,
     ThemeIcon,
     Box,
+    Text,
 } from "@mantine/core";
 import {
     IconHomeFilled,
@@ -17,6 +18,7 @@ import {
 import { NavLink } from "react-router-dom";
 import classes from "./navbar.module.css"
 import { Settings } from "../../contexts/settingscontext";
+import LoginPopup from "../loginpopup/loginpopup";
 
 const pages = [
     { label: "Home", link: "/", icon: < IconHomeFilled />, external: false },
@@ -30,6 +32,8 @@ const Navbar: React.FC = () => {
     const {
         navbarOpen,
         toggleNavbar,
+        toggleLogin,
+        username
     } = Settings();
 
     const pageButtons = pages.map((item) => (
@@ -70,6 +74,10 @@ const Navbar: React.FC = () => {
             <Stack gap={0}>
                 {pageButtons}
             </Stack>
+            <UnstyledButton className={classes.loginButton} onClick={toggleLogin}>
+                <Text style={{fontWeight: "bold"}}>{username ? `Hello, ${username}` : "Setup User"}</Text>
+            </UnstyledButton>
+            <LoginPopup />
         </Drawer>
     )
 }
