@@ -9,20 +9,22 @@ const LoginPopup: React.FC = () => {
     const {
         loginOpen,
         toggleLogin,
-        username,
-        setGUsername,
-        clearGUsername,
+        createNewUser,
+        signOutUser,
+        user,
     } = Settings();
 
     // set states of the login modal
     const toLoginState = () => setLoginState("login")
     const toConfirmState = () => setLoginState("confirm")
+    const toCreateState = () => setLoginState("create")
     const toConfigState = () => setLoginState("config")
+    
 
     // handle page button submission
     const loginSubmission = () => {
         if (usernameInput) {
-            toConfirmState();
+            toCreateState();;
         }
         else {
             setOpenPopover(true);
@@ -30,13 +32,23 @@ const LoginPopup: React.FC = () => {
     }
 
     const confirmSubmission = () => {
-        setGUsername(usernameInput);
+        // setGUsername(usernameInput);
         toConfigState();
         setUsernameInput("");
     }
 
+    const createSubmission = () => {
+        try {
+            createNewUser(usernameInput);
+            toConfigState();
+            setUsernameInput("");
+        } catch (err) {
+            console.log("bruh")
+        }
+    }
+
     const signoutSubmission = () => {
-        clearGUsername();
+        signOutUser();
         toLoginState();
     }
 
@@ -64,7 +76,17 @@ const LoginPopup: React.FC = () => {
                         </Popover.Target>
                         <PopoverDropdown>Username must not be empty</PopoverDropdown>
                     </Popover>
+                </Stack>
+            )}
 
+            {loginState === "create" && (
+                <Stack>
+                    <Text>User not found, Create new user?</Text>
+                    <Text>Username: {usernameInput}</Text>
+                    <Group>
+                        <Button onClick={() => toLoginState()}>Cancel</Button>
+                        <Button onClick={() => createSubmission()}>Confirm</Button>
+                    </Group>
                 </Stack>
             )}
 
@@ -82,8 +104,8 @@ const LoginPopup: React.FC = () => {
 
             {loginState === "config" && (
                 <Stack>
-                    <Text>Hello, {username}</Text>
-                    <Text>Your rating is: rating here</Text>
+                    <Text>Hello, {user?.username}</Text>
+                    <Text>Your rating is: {user?.rating}</Text>
                     <Button onClick={() => signoutSubmission()}>Sign Out</Button>
                 </Stack>
             )}

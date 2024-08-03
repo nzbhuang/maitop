@@ -1,4 +1,6 @@
 import React, { createContext, useState, useContext, ReactNode } from 'react';
+import { createUser } from '../services/UserService';
+import { User } from '../models/User';
 
 interface SettingsContextItems {
     lightTheme: boolean;
@@ -7,9 +9,9 @@ interface SettingsContextItems {
     toggleNavbar: () => void;
     loginOpen: boolean;
     toggleLogin: () => void;
-    username: string;
-    setGUsername: (userInput: string) => void;
-    clearGUsername: () => void;
+    createNewUser: (userInput: string) => void;
+    signOutUser: () => void;
+    user: User | null;
 };
 
 const SettingsContext = createContext<SettingsContextItems | undefined>(
@@ -20,7 +22,7 @@ export const SettingsProvider: React.FC<{ children: ReactNode }> = ({ children }
     const [lightTheme, setTheme] = useState(true);
     const [navbarOpen, setNavbar] = useState(false);
     const [loginOpen, setLoginOpen] = useState(false);
-    const [username, setUsername] = useState("");
+    const [user, setUser] = useState<User | null>(null);
 
     const toggleTheme = () => {
         setTheme(lightTheme ? false : true);
@@ -34,12 +36,18 @@ export const SettingsProvider: React.FC<{ children: ReactNode }> = ({ children }
         setLoginOpen(!loginOpen);
     }
 
-    const setGUsername = (userInput: string) => {
-        setUsername(userInput);
+    const createNewUser = async (userInput: string) => {
+        try {
+            const newUser = await createUser(userInput)
+            setUser(newUser.data)
+            console.log("user created: ", newUser)
+        } catch (err) {
+            console.error("failed creating user: ", err)
+        }
     }
 
-    const clearGUsername = () => {
-        setUsername("");
+    const signOutUser = () => {
+        setUser(null);
     }
 
     return (
@@ -51,9 +59,9 @@ export const SettingsProvider: React.FC<{ children: ReactNode }> = ({ children }
                 toggleNavbar,
                 loginOpen,
                 toggleLogin,
-                username,
-                setGUsername,
-                clearGUsername,
+                createNewUser,
+                signOutUser,
+                user,
             }}>
             {children}
         </SettingsContext.Provider>

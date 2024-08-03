@@ -33,7 +33,7 @@ const Navbar: React.FC = () => {
         navbarOpen,
         toggleNavbar,
         toggleLogin,
-        username
+        user
     } = Settings();
 
     const pageButtons = pages.map((item) => (
@@ -75,7 +75,7 @@ const Navbar: React.FC = () => {
                 {pageButtons}
             </Stack>
             <UnstyledButton className={classes.loginButton} onClick={toggleLogin}>
-                <Text style={{fontWeight: "bold"}}>{username ? `Hello, ${username}` : "Setup User"}</Text>
+                <Text style={{fontWeight: "bold"}}>{user?.username ? `Hello, ${user.username}` : "Setup User"}</Text>
             </UnstyledButton>
             <LoginPopup />
         </Drawer>

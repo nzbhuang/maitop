@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Contexts;
 using Models;
+using Helpers;
 
 namespace backend.Controllers
 {
@@ -30,7 +31,7 @@ namespace backend.Controllers
 
         // GET: api/Users/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
+        public async Task<ActionResult<User>> GetUserById(int id)
         {
             var user = await _context.Users.FindAsync(id);
 
@@ -91,12 +92,25 @@ namespace backend.Controllers
         // POST: api/Users
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        public async Task<ActionResult<UserResponse>> CreateUser([FromBody] CreateUserRequest request)
         {
+            var user = new User
+            {
+                Username = request.Username,
+                Rating = 0
+            };
+
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUser", new { id = user.UserId }, user);
+            var response = new User
+            {
+                UserId = user.UserId,
+                Username = user.Username,
+                Rating = 0
+            };
+
+            return CreatedAtAction(nameof(GetUserById), new { id = user.UserId }, response);
         }
 
         // DELETE: api/Users/5

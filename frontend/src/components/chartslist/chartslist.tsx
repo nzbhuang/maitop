@@ -104,8 +104,6 @@ const ChartsList: React.FC = () => {
         <Box className={classes.page}>
             <LoadingOverlay visible={loading} loaderProps={{ children: "Loading charts..."}} />
             <Stack className={classes.stack}>
-                {loading && <p>loading data</p>}
-                {error && <p>{error}</p>}
             </Stack>
             <Table highlightOnHover>
                 <Table.Thead>
