@@ -10,6 +10,7 @@ interface SettingsContextItems {
     loginOpen: boolean;
     toggleLogin: () => void;
     createNewUser: (userInput: string) => void;
+    loginUser: (user: User) => void
     signOutUser: () => void;
     user: User | null;
 };
@@ -46,6 +47,10 @@ export const SettingsProvider: React.FC<{ children: ReactNode }> = ({ children }
         }
     }
 
+    const loginUser = (user: User) => {
+        setUser(user);
+    }
+
     const signOutUser = () => {
         setUser(null);
     }
@@ -60,6 +65,7 @@ export const SettingsProvider: React.FC<{ children: ReactNode }> = ({ children }
                 loginOpen,
                 toggleLogin,
                 createNewUser,
+                loginUser,
                 signOutUser,
                 user,
             }}>

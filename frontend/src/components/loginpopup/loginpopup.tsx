@@ -1,15 +1,21 @@
 import { Button, Group, Modal, Popover, PopoverDropdown, Stack, Text, TextInput } from "@mantine/core";
 import { Settings } from "../../contexts/settingscontext"
 import { useState } from "react";
+import { getUserFromUsername } from "../../services/UserService";
+import axios from "axios";
+import { User } from "../../models/User";
 
 const LoginPopup: React.FC = () => {
     const [usernameInput, setUsernameInput] = useState("");
     const [loginState, setLoginState] = useState("login");
     const [openPopover, setOpenPopover] = useState(false)
+    const [userToConfirm, setUserToConfirm] = useState<User | null>(null)
+
     const {
         loginOpen,
         toggleLogin,
         createNewUser,
+        loginUser,
         signOutUser,
         user,
     } = Settings();
@@ -19,22 +25,40 @@ const LoginPopup: React.FC = () => {
     const toConfirmState = () => setLoginState("confirm")
     const toCreateState = () => setLoginState("create")
     const toConfigState = () => setLoginState("config")
-    
 
     // handle page button submission
-    const loginSubmission = () => {
+    const loginSubmission = async () => {
         if (usernameInput) {
-            toCreateState();;
-        }
-        else {
-            setOpenPopover(true);
+            try {
+                const res = await getUserFromUsername(usernameInput);
+                setUserToConfirm(res.data)
+                toConfirmState();
+            } catch (err) {
+                // if user not found, send to user creation
+                if (axios.isAxiosError(err)) {
+                    if (err.response && err.response.status === 404) {
+                        toCreateState()
+                    } else {
+                        console.error("not 404: ", err)
+                    }
+                } else {
+                    console.error("unexpected axios error:", err)
+                }
+            }
+        } else {
+            setOpenPopover(true)
         }
     }
 
     const confirmSubmission = () => {
-        // setGUsername(usernameInput);
-        toConfigState();
-        setUsernameInput("");
+        if (userToConfirm) {
+            loginUser(userToConfirm);
+            toConfigState();
+            setUsernameInput("");
+            setUserToConfirm(null);
+        } else {
+            console.error("confirm logic failed?")
+        }
     }
 
     const createSubmission = () => {
@@ -93,8 +117,8 @@ const LoginPopup: React.FC = () => {
             {loginState === "confirm" && (
                 <Stack>
                     <Text>Is this you?</Text>
-                    <Text>Username: {usernameInput}</Text>
-                    <Text>Rating: rating here</Text>
+                    <Text>Username: {userToConfirm?.username}</Text>
+                    <Text>Rating: {userToConfirm?.rating}</Text>
                     <Group>
                         <Button onClick={() => toLoginState()}>Cancel</Button>
                         <Button onClick={() => confirmSubmission()}>Confirm</Button>
@@ -106,7 +130,10 @@ const LoginPopup: React.FC = () => {
                 <Stack>
                     <Text>Hello, {user?.username}</Text>
                     <Text>Your rating is: {user?.rating}</Text>
-                    <Button onClick={() => signoutSubmission()}>Sign Out</Button>
+                    <Group>
+                        <Button onClick={() => signoutSubmission()}>Sign Out</Button>
+                    </Group>
+
                 </Stack>
             )}
         </Modal>

@@ -12,3 +12,13 @@ export async function createUser(username: string) {
         throw err;
     }
 }
+
+export async function getUserFromUsername(username: string) {
+    try {
+        const res = await axios.get(`${apiBase}Users/by-username/${username}`)
+        console.log(res);
+        return res;
+    } catch (err) {
+        throw err;
+    }
+}
