@@ -14,9 +14,9 @@ namespace backend.Controllers
     [ApiController]
     public class ChartsController : ControllerBase
     {
-        private readonly ChartsDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public ChartsController(ChartsDbContext context)
+        public ChartsController(ApplicationDbContext context)
         {
             _context = context;
         }

@@ -19,7 +19,7 @@ namespace maitopApi
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "maitop API", Description = "maimai", Version = "v1" });
             });
 
-            builder.Services.AddDbContext<ChartsDbContext>(options =>
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             // Add CORS
