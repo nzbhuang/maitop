@@ -29,10 +29,10 @@ namespace backend.Controllers
         }
 
         // GET: api/Charts/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Chart>> GetChart(int id)
+        [HttpGet("{chartId}")]
+        public async Task<ActionResult<Chart>> GetChart(int chartId)
         {
-            var chart = await _context.Charts.FindAsync(id);
+            var chart = await _context.Charts.FindAsync(chartId);
 
             if (chart == null)
             {
@@ -42,9 +42,9 @@ namespace backend.Controllers
             return chart;
         }
 
-        private bool ChartExists(int id)
+        private bool ChartExists(int chartId)
         {
-            return _context.Charts.Any(e => e.Id == id);
+            return _context.Charts.Any(e => e.ChartId == chartId);
         }
     }
 }

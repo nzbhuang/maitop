@@ -80,7 +80,7 @@ const ChartsList: React.FC = () => {
 
     const rows = charts.map((chart) =>
         <Table.Tr>
-            <Table.Td>{chart.id}</Table.Td>
+            <Table.Td>{chart.chartId}</Table.Td>
             <Table.Td>{chart.song}</Table.Td>
             <Table.Td className={getDifficultyClass(chart)}>{getDifficultyText(chart)}</Table.Td>
             <Table.Td className={getDifficultyClass(chart)}>{getLevel(chart)}</Table.Td>
@@ -110,9 +110,9 @@ const ChartsList: React.FC = () => {
             <Table highlightOnHover>
                 <Table.Thead>
                     <TableHeader
-                        sorted={sortBy === "id"}
+                        sorted={sortBy === "chartId"}
                         reversed={reverseSort}
-                        sort={() => setSorting("id")}
+                        sort={() => setSorting("chartId")}
                     >
                         ID
                     </TableHeader>

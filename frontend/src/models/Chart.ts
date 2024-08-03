@@ -1,5 +1,5 @@
 export interface Chart {
-    id: number;
+    chartId: number;
     song: string;
     type: string;
     difficulty: string;
