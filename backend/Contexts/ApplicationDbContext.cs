@@ -11,15 +11,13 @@ namespace Contexts
         }
 
         public DbSet<Chart> Charts { get; set; }
-        public DbSet<User> User { get; set; } = default!;
-        public DbSet<Score> Score { get; set; } = default!;
+        public DbSet<User> Users { get; set; } = default!;
+        public DbSet<Score> Scores { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>()
-                .HasMany(u => u.Scores)
-                .WithOne(s => s.User)
-                .HasForeignKey(s => s.UserId);
+                .HasMany(u => u.Scores);
 
             modelBuilder.Entity<Score>()
                 .HasOne(s => s.Chart)

@@ -25,14 +25,14 @@ namespace backend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Score>>> GetScore()
         {
-            return await _context.Score.ToListAsync();
+            return await _context.Scores.ToListAsync();
         }
 
         // GET: api/Scores/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Score>> GetScore(int id)
         {
-            var score = await _context.Score.FindAsync(id);
+            var score = await _context.Scores.FindAsync(id);
 
             if (score == null)
             {
@@ -78,7 +78,7 @@ namespace backend.Controllers
         [HttpPost]
         public async Task<ActionResult<Score>> PostScore(Score score)
         {
-            _context.Score.Add(score);
+            _context.Scores.Add(score);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetScore", new { id = score.ScoreId }, score);
@@ -88,13 +88,13 @@ namespace backend.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteScore(int id)
         {
-            var score = await _context.Score.FindAsync(id);
+            var score = await _context.Scores.FindAsync(id);
             if (score == null)
             {
                 return NotFound();
             }
 
-            _context.Score.Remove(score);
+            _context.Scores.Remove(score);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -102,7 +102,7 @@ namespace backend.Controllers
 
         private bool ScoreExists(int id)
         {
-            return _context.Score.Any(e => e.ScoreId == id);
+            return _context.Scores.Any(e => e.ScoreId == id);
         }
     }
 }
