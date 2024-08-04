@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { getUserFromUsername } from "../../services/UserService";
 import axios from "axios";
 import { User } from "../../models/User";
+import classes from './loginpopup.module.css'
 
 const LoginPopup: React.FC = () => {
     const [usernameInput, setUsernameInput] = useState("");
@@ -106,7 +107,7 @@ const LoginPopup: React.FC = () => {
                     />
                     <Popover opened={openPopover} onChange={setOpenPopover}>
                         <Popover.Target>
-                            <Button onClick={() => loginSubmission()}>
+                            <Button onClick={() => loginSubmission()} className={classes.button}>
                                 Set
                             </Button>
                         </Popover.Target>
@@ -120,8 +121,8 @@ const LoginPopup: React.FC = () => {
                     <Text>User not found, Create new user?</Text>
                     <Text>Username: {usernameInput}</Text>
                     <Group>
-                        <Button onClick={() => toLoginState()}>Cancel</Button>
-                        <Button onClick={() => createSubmission()}>Confirm</Button>
+                        <Button onClick={() => toLoginState()} className={classes.button}>Cancel</Button>
+                        <Button onClick={() => createSubmission()} className={classes.button}>Confirm</Button>
                     </Group>
                 </Stack>
             )}
@@ -132,8 +133,8 @@ const LoginPopup: React.FC = () => {
                     <Text>Username: {userToConfirm?.username}</Text>
                     <Text>Rating: {userToConfirm?.rating}</Text>
                     <Group>
-                        <Button onClick={() => toLoginState()}>Cancel</Button>
-                        <Button onClick={() => confirmSubmission()}>Confirm</Button>
+                        <Button onClick={() => toLoginState()} className={classes.button}>Cancel</Button>
+                        <Button onClick={() => confirmSubmission()} className={classes.button}>Confirm</Button>
                     </Group>
                 </Stack>
             )}
@@ -143,7 +144,7 @@ const LoginPopup: React.FC = () => {
                     <Text>Hello, {user?.username}</Text>
                     <Text>Your rating is: {user?.rating}</Text>
                     <Group>
-                        <Button onClick={() => signoutSubmission()}>Sign Out</Button>
+                        <Button onClick={() => signoutSubmission()} className={classes.button}>Sign Out</Button>
                     </Group>
 
                 </Stack>

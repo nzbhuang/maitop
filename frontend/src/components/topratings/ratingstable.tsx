@@ -5,6 +5,7 @@ import { Score } from "../../models/Score";
 import { getScoresById, getUserFromId, updateRatingById } from "../../services/UserService";
 import { IconRefresh, IconTrash } from "@tabler/icons-react";
 import { deleteScoreById } from "../../services/ScoreService";
+import classes from './topratings.module.css'
 
 const RatingsTable: React.FC = () => {
     const [topScores, setTopScores] = useState<Score[]>([])
@@ -47,7 +48,7 @@ const RatingsTable: React.FC = () => {
 
     const rows = topScores.map((score, index) =>
         <Table.Tr>
-            <Table.Td>{index + 1}</Table.Td>
+            <Table.Td className={index+1 <= 50 ? classes.topFiftyRating: null}>{index + 1}</Table.Td>
             <Table.Td>{score.chart?.song}</Table.Td>
             <Table.Td>{score.scoreRating}</Table.Td>
             <Table.Td>{score.accuracy}</Table.Td>
@@ -72,7 +73,7 @@ const RatingsTable: React.FC = () => {
                 <Tooltip label="Refresh scores" style={{ cursor: 'pointer' }} onClick={() => fetchScores() }>
                     <IconRefresh size={24} />
                 </Tooltip>
-                <Text>Your current rating is: {user?.rating}</Text>
+                <Text className={classes.header}>Your current rating is: {user?.rating}</Text>
                 {loading && <Text>loading scores...</Text>}
             </Group>
 

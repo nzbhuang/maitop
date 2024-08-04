@@ -7,6 +7,7 @@ import { Chart } from "../../models/Chart";
 import { getChartById } from "../../services/ChartService";
 import { createScore } from "../../services/ScoreService";
 import { calculateScoreRating } from "../../utils/rating";
+import classes from './topratings.module.css'
 
 
 const AddScoreFields: React.FC = () => {
@@ -104,7 +105,7 @@ const AddScoreFields: React.FC = () => {
 
     return (
         <Fieldset legend="Add score">
-            <Text>Chart Details:</Text>
+            <Text className={classes.header}>Chart Details:</Text>
             <Group>
                 <TextInput
                     label="Search by Chart ID"
@@ -147,14 +148,16 @@ const AddScoreFields: React.FC = () => {
                     variant="filled"
                     disabled
                 />
-                <Button onClick={clearChart}>
-                    Clear
-                </Button>
-                <Button onClick={setChart} disabled={idInputError ? true : false}>
+            </Group>
+            <Group>
+                <Button onClick={setChart} disabled={idInputError ? true : false} className={classes.button}>
                     Set Chart
                 </Button>
+                <Button onClick={clearChart} className={classes.button}>
+                    Clear
+                </Button>
             </Group>
-            <Text>Score Details:</Text>
+            <Text className={classes.header}>Score Details:</Text>
             <Group>
                 <TextInput
                     label="Enter Accuracy"
@@ -173,10 +176,10 @@ const AddScoreFields: React.FC = () => {
                     variant="filled"
                     disabled
                 />
-                <Button onClick={createScoreAndAddToUser} disabled={accInputError ? true : false}>
-                    Create Score for {user?.username}
-                </Button>
             </Group>
+            <Button onClick={createScoreAndAddToUser} disabled={accInputError ? true : false} className={classes.button}>
+                Create Score
+            </Button>
         </Fieldset>
     )
 }
