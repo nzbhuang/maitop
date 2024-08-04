@@ -50,14 +50,23 @@ namespace backend.Controllers
         // PUT: api/Scores/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutScore(int id, Score score)
+        public async Task<IActionResult> UpdateScore(int id, [FromBody] UpdateScoreRequest request)
         {
-            if (id != score.ScoreId)
+            if (id != request.ScoreId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(score).State = EntityState.Modified;
+            // get score to update
+            var score = await _context.Scores.FindAsync(id);
+            if (score == null) 
+            {
+                return NotFound();
+            }
+
+            // update score
+            score.Accuracy = request.Accuracy;
+            score.ScoreRating = request.ScoreRating;
 
             try
             {
