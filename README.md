@@ -27,9 +27,13 @@ Top performance tracker for arcade rhythm game maimai
 
 ### Advanced Requirements
 - Switching of custom light and dark themes
-- TBA
+- Use of state management
 
 ## What I am proud of
 - The functionality and look of the charts listing, having everything I originally envisioned for this page
 - (and the login pages, which was fun learning how to make it and creating extra functionality I didn't expect it to have in the first place)
 
+## Additional Information
+The first commits done to this repository were accidentally done from my school github account (bhua74)
+
+An appsettings.json file with connection string to the server is provided in another repository [found here](https://github.com/nzbhuang/maitop-submission-config), which is shared to msaccelerate
