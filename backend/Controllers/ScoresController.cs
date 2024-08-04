@@ -26,14 +26,18 @@ namespace backend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Score>>> GetScores()
         {
-            return await _context.Scores.ToListAsync();
+            return await _context.Scores
+                .Include(s => s.Chart)
+                .ToListAsync();
         }
 
         // GET: api/Scores/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Score>> GetScoreById(int id)
         {
-            var score = await _context.Scores.FindAsync(id);
+            var score = await _context.Scores
+                .Include(s => s.Chart)
+                .FirstOrDefaultAsync(s => s.ScoreId == id);
 
             if (score == null)
             {
