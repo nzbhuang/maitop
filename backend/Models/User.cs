@@ -6,6 +6,6 @@
         public required string Username { get; set; }
         public required int Rating { get; set; }
 
-        public List<Score>? Scores { get; set; }
+        public ICollection<Score> Scores { get; set; } = new List<Score>();
     }
 }

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Contexts;
 using Models;
+using Helpers;
 
 namespace backend.Controllers
 {
@@ -23,14 +24,14 @@ namespace backend.Controllers
 
         // GET: api/Scores
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Score>>> GetScore()
+        public async Task<ActionResult<IEnumerable<Score>>> GetScores()
         {
             return await _context.Scores.ToListAsync();
         }
 
         // GET: api/Scores/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Score>> GetScore(int id)
+        public async Task<ActionResult<Score>> GetScoreById(int id)
         {
             var score = await _context.Scores.FindAsync(id);
 
@@ -76,12 +77,35 @@ namespace backend.Controllers
         // POST: api/Scores
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Score>> PostScore(Score score)
+        public async Task<ActionResult<ScoreResponse>> PostScore([FromBody] CreateScoreRequest request)
         {
+            var chart = await _context.Charts.FindAsync(request.ChartId);
+            if (chart == null)
+            {
+                return NotFound(new { Message = "Chart not found" });
+            }
+
+            var score = new Score
+            {
+                ChartId = request.ChartId,
+                Accuracy = request.Accuracy,
+                ScoreRating = request.ScoreRating,
+                Chart = chart
+            };
+
             _context.Scores.Add(score);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetScore", new { id = score.ScoreId }, score);
+            var response = new ScoreResponse
+            {
+                ScoreId = score.ScoreId,
+                ChartId = score.ChartId,
+                Accuracy = score.Accuracy,
+                ScoreRating = score.ScoreRating,
+                Chart = chart
+            };
+
+            return CreatedAtAction(nameof(GetScoreById), new { id = score.ScoreId }, response);
         }
 
         // DELETE: api/Scores/5

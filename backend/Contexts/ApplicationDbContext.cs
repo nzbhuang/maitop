@@ -19,6 +19,9 @@ namespace Contexts
             modelBuilder.Entity<User>()
                 .HasMany(u => u.Scores);
 
+            modelBuilder.Entity<Chart>()
+                .HasKey(e => e.ChartId);
+
             modelBuilder.Entity<Score>()
                 .HasOne(s => s.Chart)
                 .WithMany()
