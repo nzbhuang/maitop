@@ -5,7 +5,7 @@ export interface Score {
     userId: number;
     chartId: number;
     accuracy: number;
-    chartRating: number;
+    scoreRating: number;
     
     chart?: Chart;
 }

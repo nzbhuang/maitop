@@ -35,8 +35,18 @@ export async function getUserFromId(id: number) {
 
 export async function addScoreToUser(userId: number, scoreId: number) {
     try {
-        const res = await axios.post(`${apiBase}Users/add-score`, {userId, scoreId})
-        console.log(res)
+        const res = await axios.post(`${apiBase}Users/add-score`, {userId, scoreId});
+        console.log(res);
+        return res;
+    } catch (err) {
+        throw err;
+    }
+}
+
+export async function getScoresById(id: number) {
+    try {
+        const res = await axios.get(`${apiBase}Users/${id}/scores`)
+        console.log(res);
         return res;
     } catch (err) {
         throw err;
