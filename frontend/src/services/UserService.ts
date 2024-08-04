@@ -27,7 +27,7 @@ export async function getUserFromId(id: number) {
     try {
         const res = await axios.get(`${apiBase}Users/${id}`)
         console.log(res);
-        return res;
+        return res.data;
     } catch (err) {
         throw err;
     }
@@ -48,6 +48,14 @@ export async function getScoresById(id: number) {
         const res = await axios.get(`${apiBase}Users/${id}/scores`)
         console.log(res);
         return res;
+    } catch (err) {
+        throw err;
+    }
+}
+
+export async function updateRatingById(id: number) {
+    try {
+        await axios.put(`${apiBase}Users/update-rating/${id}`)
     } catch (err) {
         throw err;
     }

@@ -1,4 +1,4 @@
-import { Box, Stack, Text } from "@mantine/core"
+import { Box, Stack } from "@mantine/core"
 import { Settings } from "../../contexts/settingscontext";
 import AddScoreFields from "./addscorefields";
 import RatingsTable from "./ratingstable";
@@ -14,7 +14,6 @@ const TopRatings: React.FC = () => {
             {!user && <p>Start by setting up user in Navigation Bar</p>}
             {user && (
                 <Stack>
-                    <Text>Your total rating: {user.rating}</Text>
                     <AddScoreFields />
                     <Box className={classes.tableBox}>
                         <RatingsTable />

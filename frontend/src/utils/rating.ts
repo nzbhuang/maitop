@@ -20,7 +20,7 @@ export const calculateScoreRating = (internalLevel: number, accuracy: number): n
     for (let i = 0; i < ratingCoefficients.length - 1; i++) {
         const [lowAcc, lowMultiplier] = ratingCoefficients[i];
         const [highAcc] = ratingCoefficients[i + 1];
-        
+
         // ratings are the same for any >=100.5
         if (accuracy >= ratingCoefficients[ratingCoefficients.length - 1][0]) {
             rating = internalLevel * ratingCoefficients[ratingCoefficients.length - 1][0] * ratingCoefficients[ratingCoefficients.length - 1][1] / 100;

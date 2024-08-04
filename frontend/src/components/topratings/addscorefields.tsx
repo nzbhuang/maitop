@@ -1,6 +1,6 @@
 import { Fieldset, Group, TextInput, Divider, Button, Text } from "@mantine/core"
 import { Score } from "../../models/Score";
-import { addScoreToUser } from "../../services/UserService";
+import { addScoreToUser, getUserFromId, updateRatingById } from "../../services/UserService";
 import { useState } from "react";
 import { Settings } from "../../contexts/settingscontext";
 import { Chart } from "../../models/Chart";
@@ -18,7 +18,8 @@ const AddScoreFields: React.FC = () => {
     const [scoreRating, setScoreRating] = useState<number>(0)
 
     const {
-        user
+        user,
+        loginUser
     } = Settings();
 
     const handleIdInput = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -80,6 +81,11 @@ const AddScoreFields: React.FC = () => {
             console.log("hi")
             try {
                 await addScoreToUser(user.userId, newScore.scoreId);
+                if (user) {
+                    await updateRatingById(user.userId);
+                    const updatedUser = await getUserFromId(user.userId);
+                    loginUser(updatedUser)
+                }
             } catch (err) {
                 console.log(err)
             }
