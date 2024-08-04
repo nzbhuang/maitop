@@ -15,7 +15,7 @@ const ratingCoefficients: [number, number][] = [
     [100.5, 22.4],
 ];
 
-export const calculateRating = (internalLevel: number, accuracy: number): number => {
+export const calculateScoreRating = (internalLevel: number, accuracy: number): number => {
     var rating = 0;
     for (let i = 0; i < ratingCoefficients.length - 1; i++) {
         const [lowAcc, lowMultiplier] = ratingCoefficients[i];
