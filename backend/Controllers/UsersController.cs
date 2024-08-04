@@ -64,6 +64,23 @@ namespace backend.Controllers
             return user;
         }
 
+        // GET api/Users/{userId}/scores
+        [HttpGet("{id}/scores")]
+        public async Task<ActionResult<IEnumerable<Score>>> GetUserScores(int id)
+        {
+            var user = await _context.Users
+                .Include(u => u.Scores)
+                .ThenInclude(s => s.Chart)
+                .FirstOrDefaultAsync(u => u.UserId == id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(user.Scores);
+        }
+
         // PUT: api/Users/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -76,7 +93,8 @@ namespace backend.Controllers
 
             // get user
             var user = await _context.Users.FindAsync(id);
-            if (user == null) {
+            if (user == null)
+            {
                 return NotFound();
             }
 
