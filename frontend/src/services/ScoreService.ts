@@ -9,6 +9,15 @@ export async function createScore(chartId: number, accuracy: number, scoreRating
         console.log(res);
         return res;
     } catch (err) {
-        throw err
+        throw err;
+    }
+}
+
+export async function deleteScoreById(scoreId: number) {
+    try {
+        const res = await axios.delete(`${apiBase}Scores/${scoreId}`);
+        console.log(res);
+    } catch (err) {
+        throw err;
     }
 }
