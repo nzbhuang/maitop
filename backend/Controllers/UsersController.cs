@@ -26,14 +26,20 @@ namespace backend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUser()
         {
-            return await _context.Users.ToListAsync();
+            return await _context.Users
+                .Include(u => u.Scores)
+                .ThenInclude(s => s.Chart)
+                .ToListAsync();
         }
 
         // GET: api/Users/5
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUserById(int id)
         {
-            var user = await _context.Users.FindAsync(id);
+            var user = await _context.Users
+                .Include(u => u.Scores)
+                .ThenInclude(s => s.Chart)
+                .FirstOrDefaultAsync();
 
             if (user == null)
             {
@@ -111,6 +117,31 @@ namespace backend.Controllers
             };
 
             return CreatedAtAction(nameof(GetUserById), new { id = user.UserId }, response);
+        }
+
+        // POST: api/Users/add-score
+        [HttpPost("add-score")]
+        public async Task<IActionResult> AddScore([FromBody] AddScoreToUserRequest request)
+        {
+            var user = await _context.Users
+                .Include(u => u.Scores)
+                .FirstOrDefaultAsync(u => u.UserId == request.UserId);
+            if (user == null)
+            {
+                return NotFound("User not found");
+            }
+
+            var score = await _context.Scores
+                .FirstOrDefaultAsync(s => s.ScoreId == request.ScoreId);
+            if (score == null)
+            {
+                return NotFound("Score not found");
+            }
+
+            user.Scores.Add(score);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
         }
 
         // DELETE: api/Users/5
