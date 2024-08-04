@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
+import React, { createContext, useState, useContext, ReactNode } from 'react';
 import { createUser } from '../services/UserService';
 import { User } from '../models/User';
 
@@ -51,13 +51,6 @@ export const SettingsProvider: React.FC<{ children: ReactNode }> = ({ children }
         setUser(user);
     }
 
-    // get user data from session storage
-    useEffect(() => {
-        const savedUser = sessionStorage.getItem('user');
-        if (savedUser) {
-            setUser(JSON.parse(savedUser))
-        }
-    }, []);
 
     const signOutUser = () => {
         setUser(null);
