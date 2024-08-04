@@ -16,8 +16,8 @@ const RatingsTable: React.FC = () => {
                 try {
                     setLoading(true);
                     const res = await getScoresById(user.userId);
-                    setTopScores(res.data)
-                    sortScoresByRating()
+                    const sortedScores = res.data.sort((a: Score, b: Score) => b.scoreRating - a.scoreRating);
+                    setTopScores(sortedScores);
                 } catch (err) {
                     setError("Failed getting top scores")
                 } finally {
@@ -28,10 +28,6 @@ const RatingsTable: React.FC = () => {
             fetchScores();
         }
     }, []);
-
-    const sortScoresByRating = () => {
-        setTopScores([...topScores].sort((a, b) => b.scoreRating - a.scoreRating));
-    }
 
     const rows = topScores.map((score, index) =>
         <Table.Tr>
