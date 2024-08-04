@@ -1,6 +1,6 @@
 import { Button, Group, Modal, Popover, PopoverDropdown, Stack, Text, TextInput } from "@mantine/core";
 import { Settings } from "../../contexts/settingscontext"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getUserFromUsername } from "../../services/UserService";
 import axios from "axios";
 import { User } from "../../models/User";
@@ -19,6 +19,15 @@ const LoginPopup: React.FC = () => {
         signOutUser,
         user,
     } = Settings();
+
+    // set login state to be config if a user exists
+    useEffect(() => {
+        if (user) {
+            setLoginState("config");
+        } else {
+            setLoginState("login");
+        }
+    }, []);
 
     // set states of the login modal
     const toLoginState = () => setLoginState("login")
