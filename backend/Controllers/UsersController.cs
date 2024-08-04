@@ -81,43 +81,31 @@ namespace backend.Controllers
             return Ok(user.Scores);
         }
 
-        // PUT: api/Users/5
+        // PUT: api/Scores/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutUserRating(int id, UpdateUserRatingRequest request)
+        [HttpPut("update-rating/{id}")]
+        public async Task<IActionResult> UpdateScore(int id)
         {
-            if (id != request.UserId)
-            {
-                return BadRequest();
-            }
+            var user = await _context.Users
+                .Include(u => u.Scores)
+                .FirstOrDefaultAsync(u => u.UserId == id);
 
-            // get user
-            var user = await _context.Users.FindAsync(id);
             if (user == null)
             {
                 return NotFound();
             }
 
-            // update user
-            user.Rating = request.Rating;
+            var totalRating = user.Scores
+                .OrderByDescending(s => s.ScoreRating)
+                .Take(50)
+                .Sum(s => s.ScoreRating);
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UserExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            user.Rating = totalRating;
 
-            return NoContent();
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
+
+            return Ok(user);
         }
 
         // POST: api/Users
