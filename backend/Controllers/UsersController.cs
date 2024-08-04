@@ -67,14 +67,21 @@ namespace backend.Controllers
         // PUT: api/Users/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, User user)
+        public async Task<IActionResult> PutUserRating(int id, UpdateUserRatingRequest request)
         {
-            if (id != user.UserId)
+            if (id != request.UserId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(user).State = EntityState.Modified;
+            // get user
+            var user = await _context.Users.FindAsync(id);
+            if (user == null) {
+                return NotFound();
+            }
+
+            // update user
+            user.Rating = request.Rating;
 
             try
             {
