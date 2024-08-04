@@ -12,3 +12,13 @@ export async function getAllCharts() {
         throw err;
     }
 }
+
+export async function getChartById(chartId: number) {
+    try {
+        const res = await axios.get(`${apiBase}Charts/${chartId}`);
+        console.log(res);
+        return res;
+    } catch (err) {
+        throw err;
+    }
+}
