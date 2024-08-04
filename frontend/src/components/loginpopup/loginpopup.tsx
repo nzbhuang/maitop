@@ -52,6 +52,7 @@ const LoginPopup: React.FC = () => {
 
     const confirmSubmission = () => {
         if (userToConfirm) {
+            sessionStorage.setItem('user', JSON.stringify(userToConfirm));
             loginUser(userToConfirm);
             toConfigState();
             setUsernameInput("");
@@ -64,6 +65,7 @@ const LoginPopup: React.FC = () => {
     const createSubmission = () => {
         try {
             createNewUser(usernameInput);
+            sessionStorage.setItem('user', JSON.stringify(userToConfirm));
             toConfigState();
             setUsernameInput("");
         } catch (err) {
@@ -73,6 +75,7 @@ const LoginPopup: React.FC = () => {
 
     const signoutSubmission = () => {
         signOutUser();
+        sessionStorage.removeItem('user');
         toLoginState();
     }
 
